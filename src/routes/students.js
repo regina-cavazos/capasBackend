@@ -1,22 +1,19 @@
+// routes - students.js
 const express = require('express');
 
 const router = express.Router();
-const CustomerHttpHandler = require('../handlers/students');
-const CustomerServiceFactory = require('../db/factory');
-const CustomerController = require('../controllers/customer');
+const DBFactory = require('../db/factory');
+const StudentController = require('../controllers/students');
+const StudentHttpHandler = require('../handlers/students');
 
 // Create the service and controller
-const customerService = CustomerServiceFactory.create('fake');
-const customerController = new CustomerController(customerService);
+const studentService = DBFactory.create('fake');
+const studentController = new StudentController(studentService);
 
 // Create the handler instance
-const customerHandler = new CustomerHttpHandler(customerController);
+const studentHandler = new StudentHttpHandler(studentController);
 
 // Set up routes with bound handler methods
-router.get('/', customerHandler.getAllCustomers.bind(customerHandler));
-router.get('/:id', customerHandler.getCustomerById.bind(customerHandler));
-router.post('/', customerHandler.createCustomer.bind(customerHandler));
-router.put('/:id', customerHandler.updateCustomer.bind(customerHandler));
-router.delete('/:id', customerHandler.deleteCustomer.bind(customerHandler));
+router.get('/', studentHandler.getAllStudents.bind(studentHandler));
 
 module.exports = router;
